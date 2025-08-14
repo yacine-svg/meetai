@@ -2,11 +2,12 @@
 
 import { authClient } from "@/lib/auth-client";
 
-import { set, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OctagonAlertIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card"
@@ -20,8 +21,8 @@ import {
     FormMessage,
     } from "@/components/ui/form";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     name: z.string().min(1, { message: "Name is required"}),
@@ -57,6 +58,7 @@ export const SignUpView = () => {
             name: data.name,
             email: data.email,
             password: data.password,
+            callbackURL: "/",
         },
         {
             onSuccess: () => {
@@ -182,19 +184,27 @@ export const SignUpView = () => {
                                 <div className="grid grid-cols-2 gap-4">
                                     <Button
                                     disabled={pending}
+                                    onClick={() => authClient.signIn.social({
+                                        provider: "google",
+                                        callbackURL: "/"
+                                    })}
                                     variant="outline"
                                     type="button"
                                     className="w-full"
                                     >
-                                        Google
+                                        <FaGoogle />
                                     </Button>
                                     <Button
                                     disabled={pending}
+                                    onClick={() => authClient.signIn.social({
+                                        provider: "github",
+                                        callbackURL: "/"
+                                    })}
                                     variant="outline"
                                     type="button"
                                     className="w-full"
                                     >
-                                        Github
+                                        <FaGithub />
                                     </Button>
                                 </div>
                                 <div className="text-center text-sm">

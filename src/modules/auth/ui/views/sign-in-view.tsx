@@ -2,11 +2,12 @@
 
 import { authClient } from "@/lib/auth-client";
 
-import { set, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OctagonAlertIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card"
@@ -48,6 +49,7 @@ export const SignInView = () => {
         authClient.signIn.email({
             email: data.email,
             password: data.password,
+            callbackURL: "/",
         },
         {
             onSuccess: () => {
@@ -124,7 +126,7 @@ export const SignInView = () => {
                                 <Button 
                                 disabled={pending}
                                 type="submit"
-                                className="w-full">
+                                className="w-full cursor-pointer">
                                     Sign in
                                 </Button>
                                 <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
@@ -135,19 +137,27 @@ export const SignInView = () => {
                                 <div className="grid grid-cols-2 gap-4">
                                     <Button
                                     disabled={pending}
+                                    onClick={() => authClient.signIn.social({
+                                        provider: "google",
+                                        callbackURL: "/"
+                                    })}
                                     variant="outline"
                                     type="button"
-                                    className="w-full"
+                                    className="w-full cursor-pointer"
                                     >
-                                        Google
+                                        <FaGoogle />
                                     </Button>
                                     <Button
                                     disabled={pending}
+                                    onClick={() => authClient.signIn.social({
+                                        provider: "github",
+                                        callbackURL: "/"
+                                    })}
                                     variant="outline"
                                     type="button"
-                                    className="w-full"
+                                    className="w-full cursor-pointer"
                                     >
-                                        Github
+                                        <FaGithub />
                                     </Button>
                                 </div>
                                 <div className="text-center text-sm">
