@@ -85,8 +85,8 @@ export const meetingStatus = pgEnum("meeting_status", [
   "upcoming",
   "active",
   "completed",
-  "canceled",
   "processing",
+  "canceled",
 ]);
 
 export const meetings = pgTable("meetings", {
