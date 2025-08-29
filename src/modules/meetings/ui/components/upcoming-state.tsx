@@ -17,7 +17,7 @@ export const UpcomingState = ({meetingId, onCancelMeeting, isCancelling}: Props)
             title="Not started yet"
             description="Once you start the meeting, a summary will appear here."
             />
-            <div className="flex flex-col-reverse lg:flex-row lg;justify-center items-center gap-2 w-full">
+            <div className="flex flex-col-reverse lg:flex-row lg:justify-center items-center gap-2 w-full">
                 <Button
                 variant="secondary"
                 className="w-full lg:w-auto"
