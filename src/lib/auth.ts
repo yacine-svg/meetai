@@ -5,6 +5,10 @@ import { db } from "../db"; // your drizzle instance
 import * as schema from "../db/schema"; // your schema file
 
 export const auth = betterAuth({
+    trustedOrigins: [
+    "http://localhost:3000",
+    "https://uncommon-generally-mole.ngrok-free.app"
+    ],
     socialProviders: {
         google: { 
             clientId: process.env.GOOGLE_CLIENT_ID as string, 
