@@ -6,8 +6,8 @@ import * as schema from "../db/schema"; // your schema file
 
 export const auth = betterAuth({
     trustedOrigins: [
-    "http://localhost:3000",
-    "https://uncommon-generally-mole.ngrok-free.app"
+    process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
+    ...(process.env.NODE_ENV !== "production" && process.env.NGROK_URL ? [process.env.NGROK_URL] : []),
     ],
     socialProviders: {
         google: { 
