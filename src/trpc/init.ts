@@ -39,9 +39,15 @@ export const protectedProcedure = baseProcedure.use(async({ ctx, next}) => {
   return next({ ctx: { ...ctx, auth: session } });
 })
 export const premiumProcedure = (entity: "meetings" | "agents") => protectedProcedure.use( async ({ ctx, next }) => {
-  const customer = await polarClient.customers.getStateExternal({
-    externalId: ctx.auth.user.id,
-  })
+  let customer: Awaited<ReturnType<typeof polarClient.customers.getStateExternal>> | null = null;
+  try {
+    customer = await polarClient.customers.getStateExternal({
+      externalId: ctx.auth.user.id,
+    });
+  } catch (_err) {
+    // Treat as free if customer not found or API fails
+    customer = null;
+  }
 
   const [userMeetings] = await db
     .select({
@@ -57,7 +63,7 @@ export const premiumProcedure = (entity: "meetings" | "agents") => protectedProc
     .from(agents)
     .where(eq(agents.userId, ctx.auth.user.id));
 
-  const isPremium = customer.activeSubscriptions.length > 0;
+  const isPremium = (customer?.activeSubscriptions?.length ?? 0) > 0;
   const isFreeAgentLimitReached = userAgents.count >= MAX_FREE_AGENTS;
   const isFreeMeetingLimitReached = userMeetings.count >= MAX_FREE_MEETINGS;
 
