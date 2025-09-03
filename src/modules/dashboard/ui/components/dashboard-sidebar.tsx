@@ -25,11 +25,13 @@ const firstSection = [
         icon: VideoIcon,
         label: "Meetings",
         href: "/meetings",
+        color: "text-emerald-600 dark:text-emerald-400"
     },
     {
         icon: BotIcon,
         label: "Agents",
         href: "/agents",
+        color: "text-emerald-600 dark:text-emerald-400"
     },
 ]
 
@@ -38,6 +40,7 @@ const secondSection = [
         icon: StarIcon,
         label: "Upgrade",
         href: "/upgrade",
+        color: "text-amber-600 dark:text-amber-400"
     }
 ]
 
@@ -74,8 +77,8 @@ export const DashboardSidebar = () => {
                                     )}
                                     isActive={pathname === item.href}>
                                         <Link href={item.href} className="flex items-center gap-3">
-                                            <item.icon className="size-5 text-emerald-600 dark:text-emerald-400" />
-                                            <span className="text-sm font-medium tracking-tight text-slate-800 dark:text-slate-200">{item.label}</span>
+                                            <item.icon className={cn("size-5", item.color)} />
+                                            <span className={cn("text-sm font-medium tracking-tight", item.color)}>{item.label}</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
@@ -102,8 +105,8 @@ export const DashboardSidebar = () => {
                                     )}
                                     isActive={pathname === item.href}>
                                         <Link href={item.href} className="flex items-center gap-3">
-                                            <item.icon className="size-5 text-amber-600 dark:text-amber-400" />
-                                            <span className="text-sm font-medium tracking-tight text-slate-800 dark:text-slate-200">{item.label}</span>
+                                            <item.icon className={cn("size-5", item.color)} />
+                                            <span className={cn("text-sm font-medium tracking-tight", item.color)}>{item.label}</span>
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
