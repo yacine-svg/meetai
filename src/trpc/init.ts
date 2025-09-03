@@ -40,7 +40,7 @@ export const protectedProcedure = baseProcedure.use(async({ ctx, next}) => {
 })
 export const premiumProcedure = (entity: "meetings" | "agents") => protectedProcedure.use( async ({ ctx, next }) => {
   const customer = await polarClient.customers.getStateExternal({
-    externalId: ctx.auth.user.id,
+      externalId: ctx.auth.user.id,
   })
 
   const [userMeetings] = await db
