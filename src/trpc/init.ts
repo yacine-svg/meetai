@@ -40,13 +40,28 @@ export const protectedProcedure = baseProcedure.use(async({ ctx, next}) => {
 })
 export const premiumProcedure = (entity: "meetings" | "agents") => protectedProcedure.use( async ({ ctx, next }) => {
   let customer: Awaited<ReturnType<typeof polarClient.customers.getStateExternal>> | null = null;
+  
   try {
     customer = await polarClient.customers.getStateExternal({
       externalId: ctx.auth.user.id,
     });
   } catch (_err) {
-    // Treat as free if customer not found or API fails
-    customer = null;
+    // Customer doesn't exist, create one
+    try {
+      await polarClient.customers.create({
+        externalId: ctx.auth.user.id,
+        email: ctx.auth.user.email,
+        name: ctx.auth.user.name || undefined,
+      });
+      
+      // Try to get the customer again after creation
+      customer = await polarClient.customers.getStateExternal({
+        externalId: ctx.auth.user.id,
+      });
+    } catch (createError) {
+      console.error("Failed to create Polar customer:", createError);
+      customer = null;
+    }
   }
 
   const [userMeetings] = await db
