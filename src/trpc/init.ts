@@ -48,7 +48,7 @@ export const premiumProcedure = (entity: "meetings" | "agents") => protectedProc
     // Treat as free if customer not found or API fails
     customer = null;
   }
-
+  
   const [userMeetings] = await db
     .select({
         count: count(meetings.id),
