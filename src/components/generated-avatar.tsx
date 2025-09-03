@@ -3,7 +3,6 @@ import { botttsNeutral, initials } from "@dicebear/collection"
 
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { create } from "domain";
 
 interface GeneratedAvatarProps {
     seed: string;

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Markdown from "react-markdown"
 import { GeneratedAvatar } from "@/components/generated-avatar";
-import { ScrollArea, ScrollBar } from"@/components/ui/scroll-area"
+import { ScrollArea } from"@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MeetingGetOne } from "../../types"
 import { 
